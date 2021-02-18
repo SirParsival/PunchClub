@@ -881,6 +881,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcaa623956f4d489a1b8e7c81037d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseAnim: {fileID: 52750573}
+  body: {fileID: 1586185410}
+  speed: 2
+  walkSpeed: 2
 --- !u!1 &1752748834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1085,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 8.75, y: 4.6875}
+  m_Size: {x: 2.8, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
