@@ -12,6 +12,15 @@ public class Hero : MonoBehaviour
     //2
     public float speed = 2;
     public float walkSpeed = 2;
+    public float runSpeed = 5;
+
+    bool isRunning;
+    bool isMoving;
+    float lastWalk;
+    public bool canRun = true;
+    float tapAgainToRunTime = 0.2f;
+    Vector3 lastWalkVector;
+
     //3
     Vector3 currentDir;
     bool isFacingLeft;
@@ -19,20 +28,38 @@ public class Hero : MonoBehaviour
 
     void Update()
     {
-        //1
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        //2
         currentDir = new Vector3(h, 0, v);
         currentDir.Normalize();
-        //3
+        //1
         if ((v == 0 && h == 0))
         {
             Stop();
+            isMoving = false;
         }
-        else if ((v != 0 || h != 0))
+        else if (!isMoving && (v != 0 || h != 0))
         {
-            Walk();
+            //2
+            isMoving = true;
+            float dotProduct = Vector3.Dot(currentDir,
+           lastWalkVector);
+            //3
+            if (canRun && Time.time < lastWalk + tapAgainToRunTime &&
+           dotProduct > 0)
+            {
+                Run();
+            }
+            else
+            {
+                Walk();
+                //4
+                if (h != 0)
+                {
+                    lastWalkVector = currentDir;
+                    lastWalk = Time.time;
+                }
+            }
         }
     }
 
@@ -41,11 +68,23 @@ public class Hero : MonoBehaviour
     {
         speed = 0;
         baseAnim.SetFloat("Speed", speed);
+        isRunning = false;
+        baseAnim.SetBool("IsRunning", isRunning);
     }
     //2
     public void Walk()
     {
         speed = walkSpeed;
+        baseAnim.SetFloat("Speed", speed);
+        isRunning = false;
+        baseAnim.SetBool("IsRunning", isRunning);
+    }
+
+    public void Run()
+    {
+        speed = runSpeed;
+        isRunning = true;
+        baseAnim.SetBool("IsRunning", isRunning);
         baseAnim.SetFloat("Speed", speed);
     }
 
