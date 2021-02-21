@@ -1110,12 +1110,12 @@ MonoBehaviour:
   baseAnim: {fileID: 52750573}
   body: {fileID: 1586185410}
   speed: 2
+  isGrounded: 0
   walkSpeed: 2
   runSpeed: 5
   canRun: 1
   input: {fileID: 1488637893}
   jumpForce: 1750
-  isGrounded: 0
 --- !u!1 &1752748834
 GameObject:
   m_ObjectHideFlags: 0

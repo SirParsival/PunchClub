@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Actor 
 {
 
     //1
-    public Animator baseAnim;
-    public Rigidbody body;
-    //public SpriteRenderer shadowSprite;
-    //2
-    public float speed = 2;
+    //public Animator baseAnim;
+    //public Rigidbody body;
+    ////public SpriteRenderer shadowSprite;
+    ////2
+    //public float speed = 2;
     public float walkSpeed = 2;
     public float runSpeed = 5;
 
@@ -30,15 +30,17 @@ public class Hero : MonoBehaviour
     private float jumpDuration = 0.2f;
     private float lastJumpTime;
 
-    public bool isGrounded;
+    //public bool isGrounded;
 
     //3
     Vector3 currentDir;
     bool isFacingLeft;
-    protected Vector3 frontVector;
+    //protected Vector3 frontVector;
 
-    void Update()
+    public override void Update()
     {
+        base.Update();
+
         isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
         isJumpingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_rise") ||
         baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_fall");
@@ -126,27 +128,28 @@ public class Hero : MonoBehaviour
         body.AddForce(verticalVector, ForceMode.Force);
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.name == "Floor")
-        {
-            isGrounded = true;
-            baseAnim.SetBool("IsGrounded", isGrounded);
-            DidLand();
-        }
-    }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.name == "Floor")
+    //    {
+    //        isGrounded = true;
+    //        baseAnim.SetBool("IsGrounded", isGrounded);
+    //        DidLand();
+    //    }
+    //}
 
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.name == "Floor")
-        {
-            isGrounded = false;
-            baseAnim.SetBool("IsGrounded", isGrounded);
-        }
-    }
+    //void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.collider.name == "Floor")
+    //    {
+    //        isGrounded = false;
+    //        baseAnim.SetBool("IsGrounded", isGrounded);
+    //    }
+    //}
 
-    void DidLand()
+    protected override void DidLand()
     {
+        base.DidLand();
         Walk();
     }
 
@@ -172,17 +175,17 @@ public class Hero : MonoBehaviour
         }
     }
     //3
-    public void FlipSprite(bool isFacingLeft)
-    {
-        if (isFacingLeft)
-        {
-            frontVector = new Vector3(-1, 0, 0);
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else
-        {
-            frontVector = new Vector3(1, 0, 0);
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-    }
+    //public void FlipSprite(bool isFacingLeft)
+    //{
+    //    if (isFacingLeft)
+    //    {
+    //        frontVector = new Vector3(-1, 0, 0);
+    //        transform.localScale = new Vector3(-1, 1, 1);
+    //    }
+    //    else
+    //    {
+    //        frontVector = new Vector3(1, 0, 0);
+    //        transform.localScale = new Vector3(1, 1, 1);
+    //    }
+    //}
 }
