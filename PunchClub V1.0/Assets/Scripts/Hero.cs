@@ -21,6 +21,17 @@ public class Hero : MonoBehaviour
     float tapAgainToRunTime = 0.2f;
     Vector3 lastWalkVector;
 
+    bool isJumpLandAnim;
+    bool isJumpingAnim;
+
+    public InputHandler input;
+
+    public float jumpForce = 1750;
+    private float jumpDuration = 0.2f;
+    private float lastJumpTime;
+
+    public bool isGrounded;
+
     //3
     Vector3 currentDir;
     bool isFacingLeft;
@@ -28,8 +39,15 @@ public class Hero : MonoBehaviour
 
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
+        isJumpingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_rise") ||
+        baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_fall");
+
+        float h = input.GetHorizontalAxis();
+        float v = input.GetVerticalAxis();
+
+        bool jump = input.GetJumpButtonDown();
+
         currentDir = new Vector3(h, 0, v);
         currentDir.Normalize();
         //1
@@ -42,11 +60,9 @@ public class Hero : MonoBehaviour
         {
             //2
             isMoving = true;
-            float dotProduct = Vector3.Dot(currentDir,
-           lastWalkVector);
+            float dotProduct = Vector3.Dot(currentDir, lastWalkVector);
             //3
-            if (canRun && Time.time < lastWalk + tapAgainToRunTime &&
-           dotProduct > 0)
+            if (canRun && Time.time < lastWalk + tapAgainToRunTime && dotProduct > 0)
             {
                 Run();
             }
@@ -60,6 +76,11 @@ public class Hero : MonoBehaviour
                     lastWalk = Time.time;
                 }
             }
+        }
+
+        if (jump && !isJumpLandAnim && (isGrounded || (isJumpingAnim && Time.time < lastJumpTime + jumpDuration)))
+        {
+            Jump(currentDir);
         }
     }
 
@@ -88,13 +109,58 @@ public class Hero : MonoBehaviour
         baseAnim.SetFloat("Speed", speed);
     }
 
+    void Jump(Vector3 direction)
+    {
+        //1
+        if (!isJumpingAnim)
+        {
+            baseAnim.SetTrigger("Jump");
+            lastJumpTime = Time.time;
+            //2
+            Vector3 horizontalVector = new Vector3(direction.x, 0, direction.z) *
+           speed * 40;
+            body.AddForce(horizontalVector, ForceMode.Force);
+        }
+        //3
+        Vector3 verticalVector = Vector3.up * jumpForce * Time.deltaTime;
+        body.AddForce(verticalVector, ForceMode.Force);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.name == "Floor")
+        {
+            isGrounded = true;
+            baseAnim.SetBool("IsGrounded", isGrounded);
+            DidLand();
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.name == "Floor")
+        {
+            isGrounded = false;
+            baseAnim.SetBool("IsGrounded", isGrounded);
+        }
+    }
+
+    void DidLand()
+    {
+        Walk();
+    }
+
     //1
     void FixedUpdate()
     {
         Vector3 moveVector = currentDir * speed;
-        body.MovePosition(transform.position + moveVector *
-       Time.fixedDeltaTime);
-        baseAnim.SetFloat("Speed", moveVector.magnitude);
+
+        if (isGrounded)
+        {
+            body.MovePosition(transform.position + moveVector *
+           Time.fixedDeltaTime);
+            baseAnim.SetFloat("Speed", moveVector.magnitude);
+        }
         //2
         if (moveVector != Vector3.zero)
         {

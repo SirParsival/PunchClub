@@ -978,6 +978,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1488637892}
   - component: {fileID: 1488637891}
+  - component: {fileID: 1488637893}
   m_Layer: 0
   m_Name: MyGameManager
   m_TagString: Untagged
@@ -1017,6 +1018,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1488637893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488637890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4e8b9bee347e9469a549b394dd068b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJumpDuration: 0.2
 --- !u!1 &1586185408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1113,9 @@ MonoBehaviour:
   walkSpeed: 2
   runSpeed: 5
   canRun: 1
+  input: {fileID: 1488637893}
+  jumpForce: 1750
+  isGrounded: 0
 --- !u!1 &1752748834
 GameObject:
   m_ObjectHideFlags: 0
