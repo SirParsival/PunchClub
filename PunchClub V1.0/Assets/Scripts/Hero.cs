@@ -11,6 +11,11 @@ public class Hero : Actor
     ////public SpriteRenderer shadowSprite;
     ////2
     //public float speed = 2;
+
+    bool isAttackingAnim;
+    float lastAttackTime;
+    float attackLimit = 0.14f;
+
     public float walkSpeed = 2;
     public float runSpeed = 5;
 
@@ -41,6 +46,8 @@ public class Hero : Actor
     {
         base.Update();
 
+        isAttackingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack1");
+
         isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
         isJumpingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_rise") ||
         baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_fall");
@@ -50,39 +57,49 @@ public class Hero : Actor
 
         bool jump = input.GetJumpButtonDown();
 
+        bool attack = input.GetAttackButtonDown();
+
         currentDir = new Vector3(h, 0, v);
         currentDir.Normalize();
         //1
-        if ((v == 0 && h == 0))
+        if (!isAttackingAnim)
         {
-            Stop();
-            isMoving = false;
-        }
-        else if (!isMoving && (v != 0 || h != 0))
-        {
-            //2
-            isMoving = true;
-            float dotProduct = Vector3.Dot(currentDir, lastWalkVector);
-            //3
-            if (canRun && Time.time < lastWalk + tapAgainToRunTime && dotProduct > 0)
+            if ((v == 0 && h == 0))
             {
-                Run();
+                Stop();
+                isMoving = false;
             }
-            else
+            else if (!isMoving && (v != 0 || h != 0))
             {
-                Walk();
-                //4
-                if (h != 0)
+                //2
+                isMoving = true;
+                float dotProduct = Vector3.Dot(currentDir, lastWalkVector);
+                //3
+                if (canRun && Time.time < lastWalk + tapAgainToRunTime && dotProduct > 0)
                 {
-                    lastWalkVector = currentDir;
-                    lastWalk = Time.time;
+                    Run();
+                }
+                else
+                {
+                    Walk();
+                    //4
+                    if (h != 0)
+                    {
+                        lastWalkVector = currentDir;
+                        lastWalk = Time.time;
+                    }
                 }
             }
         }
-
-        if (jump && !isJumpLandAnim && (isGrounded || (isJumpingAnim && Time.time < lastJumpTime + jumpDuration)))
+        if (jump && !isJumpLandAnim && !isAttackingAnim && (isGrounded || (isJumpingAnim && Time.time < lastJumpTime + jumpDuration)))
         {
             Jump(currentDir);
+        }
+
+        if (attack && Time.time >= lastAttackTime + attackLimit)
+        {
+            lastAttackTime = Time.time;
+            Attack();
         }
     }
 
@@ -146,6 +163,11 @@ public class Hero : Actor
     //        baseAnim.SetBool("IsGrounded", isGrounded);
     //    }
     //}
+    public override void Attack()
+    {
+        baseAnim.SetInteger("EvaluatedChain", 0);
+        baseAnim.SetInteger("CurrentChain", 1);
+    }
 
     protected override void DidLand()
     {
@@ -153,15 +175,19 @@ public class Hero : Actor
         Walk();
     }
 
+    public void DidChain(int chain)
+    {
+        baseAnim.SetInteger("EvaluatedChain", 1);
+    }
+
     //1
     void FixedUpdate()
     {
         Vector3 moveVector = currentDir * speed;
 
-        if (isGrounded)
+        if (isGrounded && !isAttackingAnim)
         {
-            body.MovePosition(transform.position + moveVector *
-           Time.fixedDeltaTime);
+            body.MovePosition(transform.position + moveVector * Time.fixedDeltaTime);
             baseAnim.SetFloat("Speed", moveVector.magnitude);
         }
         //2

@@ -55,4 +55,9 @@ public class Actor : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
     }
+
+    public virtual void Attack()
+    {
+        baseAnim.SetTrigger("Attack");
+    }
 }

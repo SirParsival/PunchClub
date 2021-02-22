@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-
+    bool attack;
     float horizontal;
     float vertical;
     bool jump;
@@ -25,12 +25,12 @@ public class InputHandler : MonoBehaviour
         return jump;
     }
 
-
     void Update()
     {
         //2
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+        attack = Input.GetButtonDown("Attack");
         //3
         if (!jump && !isJumping && Input.GetButton("Jump"))
         {
@@ -49,5 +49,10 @@ public class InputHandler : MonoBehaviour
         {
             jump = false;
         }
+    }
+
+    public bool GetAttackButtonDown()
+    {
+        return attack;
     }
 }
