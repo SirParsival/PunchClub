@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-
+    public SpriteRenderer baseSprite;
     public Animator baseAnim;
     public Rigidbody body;
     //public SpriteRenderer shadowSprite;
