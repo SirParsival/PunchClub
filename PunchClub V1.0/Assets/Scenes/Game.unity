@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 52750573}
   - component: {fileID: 52750574}
   - component: {fileID: 52750575}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HeroAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360314005}
   - component: {fileID: 360314006}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440116102}
   - component: {fileID: 440116103}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ' ShadowCharacter'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 458577719}
   - component: {fileID: 458577718}
   - component: {fileID: 458577717}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyRobot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,7 +704,7 @@ GameObject:
   - component: {fileID: 510515195}
   - component: {fileID: 510515194}
   - component: {fileID: 510515193}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightCamBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 657502234}
   - component: {fileID: 657502235}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 699348618}
   - component: {fileID: 699348617}
   - component: {fileID: 699348616}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +1013,7 @@ GameObject:
   - component: {fileID: 787754914}
   - component: {fileID: 787754913}
   - component: {fileID: 787754912}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   - component: {fileID: 1096817650}
   - component: {fileID: 1096817649}
   - component: {fileID: 1096817648}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1262,7 +1262,7 @@ GameObject:
   - component: {fileID: 1586185412}
   - component: {fileID: 1586185411}
   - component: {fileID: 1586185410}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MyHero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 1752748838}
   - component: {fileID: 1752748837}
   - component: {fileID: 1752748836}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LeftEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1442,7 +1442,7 @@ GameObject:
   - component: {fileID: 1826347117}
   - component: {fileID: 1826347116}
   - component: {fileID: 1826347115}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ' LeftCamBounds'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1533,7 +1533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1934637869}
   - component: {fileID: 1934637870}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RobotAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2094957480}
   - component: {fileID: 2094957481}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HeroSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
