@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    public float maxLife = 100.0f;
+    public float currentLife = 100.0f;
     public bool isAlive = true;
     public SpriteRenderer baseSprite;
     public Animator baseAnim;
@@ -14,6 +16,29 @@ public class Actor : MonoBehaviour
     protected Vector3 frontVector;
     public bool isGrounded;
 
+    protected virtual void Start()
+    {
+        currentLife = maxLife;
+        isAlive = true;
+        baseAnim.SetBool("IsAlive", isAlive);
+    }
+
+    public virtual void TakeDamage(float value, Vector3 hitVector)
+    {
+        //1
+        FlipSprite(hitVector.x > 0);
+        currentLife -= value;
+        //2
+        if (isAlive && currentLife <= 0)
+        {
+            Die();
+        }
+    }
+
+    public bool CanBeHit()
+    {
+        return isAlive;
+    }
 
     public virtual void Update()
     {
@@ -65,7 +90,7 @@ public class Actor : MonoBehaviour
     public virtual void DidHitObject(Collider collider, Vector3 hitPoint, Vector3 hitVector)
     {
         Actor actor = collider.GetComponent<Actor>();
-        if (actor != null)
+        if (actor != null && actor.CanBeHit())
         {
             if (collider.attachedRigidbody != null)
             {
@@ -76,7 +101,7 @@ public class Actor : MonoBehaviour
     //2
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
-        actor.Die();
+        actor.TakeDamage(10, hitVector);
     }
 
     protected virtual void Die()
