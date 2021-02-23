@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    public bool isAlive = true;
     public SpriteRenderer baseSprite;
     public Animator baseAnim;
     public Rigidbody body;
@@ -75,6 +76,33 @@ public class Actor : MonoBehaviour
 
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
-        Debug.Log(gameObject.name + " HIT " + actor.gameObject.name);
+        actor.Die();
+    }
+
+    protected virtual void Die()
+    {
+        isAlive = false;
+        baseAnim.SetBool("IsAlive", isAlive);
+        StartCoroutine(DeathFlicker());
+    }
+
+    protected virtual void SetOpacity(float value)
+    {
+        Color color = baseSprite.color;
+        color.a = value;
+        baseSprite.color = color;
+    }
+
+    private IEnumerator DeathFlicker()
+    {
+        int i = 5;
+        while (i > 0)
+        {
+            SetOpacity(0.5f);
+            yield return new WaitForSeconds(0.1f);
+            SetOpacity(1.0f);
+            yield return new WaitForSeconds(0.1f);
+            i--;
+        }
     }
 }
