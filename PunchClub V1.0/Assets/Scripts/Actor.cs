@@ -60,4 +60,21 @@ public class Actor : MonoBehaviour
     {
         baseAnim.SetTrigger("Attack");
     }
+
+    public virtual void DidHitObject(Collider collider, Vector3 hitPoint, Vector3 hitVector)
+    {
+        Actor actor = collider.GetComponent<Actor>();
+        if (actor != null)
+        {
+            if (collider.attachedRigidbody != null)
+            {
+                HitActor(actor, hitPoint, hitVector);
+            }
+        }
+    }
+
+    protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
+    {
+        Debug.Log(gameObject.name + " HIT " + actor.gameObject.name);
+    }
 }

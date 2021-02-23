@@ -795,6 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 657502234}
   - component: {fileID: 657502235}
+  - component: {fileID: 657502236}
   m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
@@ -829,6 +830,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &657502236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657502233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1fe1c04fd7a69499dbf412960f5918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: {fileID: 1586185412}
+  triggerCollider: {fileID: 657502235}
 --- !u!1 &680692637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1328,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 2.4, z: 0.5}
+  m_Size: {x: 2, y: 2.4, z: 0.5}
   m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &1586185412
 MonoBehaviour:
