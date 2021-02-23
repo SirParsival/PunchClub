@@ -25,13 +25,15 @@ public class Actor : MonoBehaviour
 
     public virtual void TakeDamage(float value, Vector3 hitVector)
     {
-        //1
         FlipSprite(hitVector.x > 0);
         currentLife -= value;
-        //2
         if (isAlive && currentLife <= 0)
         {
             Die();
+        }
+        else
+        {
+            baseAnim.SetTrigger("IsHurt");
         }
     }
 
