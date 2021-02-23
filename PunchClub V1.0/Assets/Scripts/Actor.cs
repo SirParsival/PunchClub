@@ -73,7 +73,7 @@ public class Actor : MonoBehaviour
             }
         }
     }
-
+    //2
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
         actor.Die();

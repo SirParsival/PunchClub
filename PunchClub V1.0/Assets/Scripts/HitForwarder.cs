@@ -1,15 +1,15 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 public class HitForwarder : MonoBehaviour
 {
+
+    //1
     public Actor actor;
     public Collider triggerCollider;
-
+    //2
     void OnTriggerEnter(Collider hitCollider)
     {
-        Vector3 direction = new Vector3(hitCollider.transform.position.x - actor.transform.position.x, 0, 0);
+        Vector3 direction = new Vector3(hitCollider.transform.position.x -
+       actor.transform.position.x, 0, 0);
         direction.Normalize();
         BoxCollider collider = triggerCollider as BoxCollider;
         Vector3 centerPoint = this.transform.position;
