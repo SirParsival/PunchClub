@@ -106,6 +106,11 @@ public class Actor : MonoBehaviour
         actor.TakeDamage(10, hitVector);
     }
 
+    public virtual void FaceTarget(Vector3 targetPoint)
+    {
+        FlipSprite(transform.position.x - targetPoint.x > 0);
+    }
+
     protected virtual void Die()
     {
         isAlive = false;
