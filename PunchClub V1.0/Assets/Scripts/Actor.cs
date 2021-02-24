@@ -113,6 +113,11 @@ public class Actor : MonoBehaviour
         StartCoroutine(DeathFlicker());
     }
 
+    public virtual bool CanWalk()
+    {
+        return true;
+    }
+
     protected virtual void SetOpacity(float value)
     {
         Color color = baseSprite.color;
