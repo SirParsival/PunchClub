@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    public float attackDamage = 10;
     public float maxLife = 100.0f;
     public float currentLife = 100.0f;
     public bool isAlive = true;
@@ -103,7 +104,7 @@ public class Actor : MonoBehaviour
     //2
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
-        actor.TakeDamage(10, hitVector);
+        actor.TakeDamage(attackDamage, hitVector);
     }
 
     public virtual void FaceTarget(Vector3 targetPoint)
