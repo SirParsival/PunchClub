@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : Actor
 {
+    public EnemyAI ai;
+
     public static int TotalEnemies;
     public Walker walker;
 
@@ -17,6 +19,7 @@ public class Enemy : Actor
     protected override void Die()
     {
         base.Die();
+        ai.enabled = false;
         walker.enabled = false;
         TotalEnemies--;
     }
