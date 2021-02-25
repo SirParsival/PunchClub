@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 458577717}
   - component: {fileID: 458577720}
   - component: {fileID: 458577721}
+  - component: {fileID: 458577722}
   m_Layer: 9
   m_Name: EnemyRobot
   m_TagString: Untagged
@@ -603,6 +604,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1934637869}
+  - {fileID: 1418590239}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -655,8 +657,8 @@ MonoBehaviour:
   body: {fileID: 458577717}
   speed: 2
   isGrounded: 0
-  ai: {fileID: 0}
-  walker: {fileID: 0}
+  ai: {fileID: 458577722}
+  walker: {fileID: 458577721}
   stopMovementWhenHit: 1
 --- !u!195 &458577720
 NavMeshAgent:
@@ -693,6 +695,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 458577720}
+--- !u!114 &458577722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458577715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d761689f9b86b1c4aa7e3c15faf038f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackReachMin: 1
+  attackReachMax: 2
+  personalSpace: 0.75
+  detector: {fileID: 1418590237}
+  currentAction: 0
 --- !u!1 &471230086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1323,64 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096817646}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1418590236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1418590239}
+  - component: {fileID: 1418590238}
+  - component: {fileID: 1418590237}
+  m_Layer: 10
+  m_Name: HeroDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1418590237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418590236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4853cc996b9e14dac9640d91716259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroIsNearby: 0
+--- !u!135 &1418590238
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418590236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1418590239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418590236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 458577716}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1488637890
 GameObject:
   m_ObjectHideFlags: 0
