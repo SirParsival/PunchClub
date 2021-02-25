@@ -46,6 +46,11 @@ public class Hero : Actor
     {
         base.Update();
 
+        if (!isAlive)
+        {
+            return;
+        }
+
         isAttackingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack1");
 
         isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
@@ -183,6 +188,11 @@ public class Hero : Actor
     //1
     void FixedUpdate()
     {
+        if (!isAlive)
+        {
+            return;
+        }
+
         Vector3 moveVector = currentDir * speed;
 
         if (isGrounded && !isAttackingAnim)
