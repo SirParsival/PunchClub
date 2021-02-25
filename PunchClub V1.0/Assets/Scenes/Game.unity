@@ -655,6 +655,9 @@ MonoBehaviour:
   body: {fileID: 458577717}
   speed: 2
   isGrounded: 0
+  ai: {fileID: 0}
+  walker: {fileID: 0}
+  stopMovementWhenHit: 1
 --- !u!195 &458577720
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1378,7 +1381,7 @@ GameObject:
   - component: {fileID: 1586185410}
   m_Layer: 8
   m_Name: MyHero
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
