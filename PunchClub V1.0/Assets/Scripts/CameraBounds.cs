@@ -6,14 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraBounds : MonoBehaviour
 {
-    //2
+    public float offset;
     public float minVisibleX;
     public float maxVisibleX;
     private float minValue;
     private float maxValue;
     public float cameraHalfWidth;
     //3
-    private Camera activeCamera;
+    public Camera activeCamera;
     //4
     public Transform cameraRoot;
     public Transform leftBounds;
@@ -21,15 +21,11 @@ public class CameraBounds : MonoBehaviour
     //5
     void Start()
     {
-        //6
        activeCamera = Camera.main;
 
-        //7
-        cameraHalfWidth =
-        Mathf.Abs(activeCamera.ScreenToWorldPoint(
-        new Vector3(0, 0, 0)).x -
-        activeCamera.ScreenToWorldPoint(
-        new Vector3(Screen.width, 0, 0)).x) * 0.5f;
+        cameraHalfWidth = Mathf.Abs(activeCamera.ScreenToWorldPoint(
+            new Vector3(0, 0, 0)).x - activeCamera.ScreenToWorldPoint(
+                new Vector3(Screen.width, 0, 0)).x) * 0.5f;
         minValue = minVisibleX + cameraHalfWidth;
         maxValue = maxVisibleX - cameraHalfWidth;
 
@@ -46,7 +42,27 @@ public class CameraBounds : MonoBehaviour
     public void SetXPosition(float x)
     {
         Vector3 trans = cameraRoot.position;
-        trans.x = Mathf.Clamp(x, minValue, maxValue);
+        trans.x = Mathf.Clamp(x + offset, minValue, maxValue);
         cameraRoot.position = trans;
+    }
+
+    public void CalculateOffset(float actorPosition)
+    {
+        offset = cameraRoot.position.x - actorPosition;
+        SetXPosition(actorPosition);
+        StartCoroutine(EaseOffset());
+    }
+
+    private IEnumerator EaseOffset()
+    {
+        while (offset != 0)
+        {
+            offset = Mathf.Lerp(offset, 0, 0.1f);
+            if (Mathf.Abs(offset) < 0.05f)
+            {
+                offset = 0;
+            }
+            yield return new WaitForFixedUpdate();
+        }
     }
 }
