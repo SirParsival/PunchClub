@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName ="LevelData", menuName = "PunchClub/LevelData")]
+[CreateAssetMenu(fileName ="LevelData", menuName = "Pompadroid/LevelData")]
 public class LevelData : ScriptableObject 
 {
 	public List<BattleEvent> battleData;

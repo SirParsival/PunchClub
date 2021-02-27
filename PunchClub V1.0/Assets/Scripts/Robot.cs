@@ -1,23 +1,15 @@
 ﻿using System.Collections;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Robot : Enemy
 {
-    public enum RobotColor
-    {
-        Colorless = 0,
-        Copper,
-        Silver,
-        Gold,
-        Random
-    }
-
     public RobotColor color;
 
     public void SetColor(RobotColor color)
     {
         this.color = color;
+
         switch (color)
         {
             case RobotColor.Colorless:
@@ -41,8 +33,7 @@ public class Robot : Enemy
                 attackDamage = 6;
                 break;
             case RobotColor.Random:
-                baseSprite.color = new Color(Random.Range(0, 1.0f), Random.Range(0,
-               1.0f), Random.Range(0, 1.0f));
+                baseSprite.color = new Color(Random.Range(0, 1.0f), Random.Range(0, 1.0f), Random.Range(0, 1.0f));
                 maxLife = Random.Range(100, 250);
                 attackDamage = Random.Range(4, 10);
                 break;
@@ -73,4 +64,13 @@ public class Robot : Enemy
     {
         SetColor(RobotColor.Random);
     }
+}
+
+public enum RobotColor
+{
+    Colorless = 0,
+    Copper,
+    Silver,
+    Gold,
+    Random
 }
