@@ -21,6 +21,8 @@ public class CameraBounds : MonoBehaviour
 
     public Transform introWalkStart;
     public Transform introWalkEnd;
+
+    public Transform exitWalkEnd;
     //5
     void Start()
     {
@@ -49,6 +51,10 @@ public class CameraBounds : MonoBehaviour
         position = introWalkEnd.transform.localPosition;
         position.x = transform.localPosition.x - cameraHalfWidth + 2.0f;
         introWalkEnd.transform.localPosition = position;
+
+        position = exitWalkEnd.transform.localPosition;
+        position.x = transform.localPosition.x + cameraHalfWidth + 2.0f;
+        exitWalkEnd.transform.localPosition = position;
     }
     //8
     public void SetXPosition(float x)

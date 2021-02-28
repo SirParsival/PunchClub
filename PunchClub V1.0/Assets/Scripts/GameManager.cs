@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public Transform walkInStartTarget;
     public Transform walkInTarget;
 
+    public Transform walkOutTarget;
+
     void Start()
     {
         cameraBounds.SetXPosition(cameraBounds.minVisibleX);
@@ -91,6 +93,11 @@ public class GameManager : MonoBehaviour
         cameraFollows = true;
         cameraBounds.CalculateOffset(actor.transform.position.x);
         hasRemainingEvents = currentLevelData.battleData.Count > nextEventIndex;
+
+        if (!hasRemainingEvents)
+        {
+            StartCoroutine(HeroWalkout());
+        }
     }
 
     private IEnumerator LoadLevelData(LevelData data)
@@ -120,5 +127,25 @@ public class GameManager : MonoBehaviour
         actor.UseAutopilot(false);
         actor.controllable = true;
         cameraBounds.EnableBounds(true);
+    }
+
+    private IEnumerator HeroWalkout()
+    {
+        cameraBounds.EnableBounds(false);
+        cameraFollows = false;
+        actor.UseAutopilot(true);
+        actor.controllable = false;
+        actor.AnimateTo(walkOutTarget.transform.position, true, DidFinishWalkout);
+        yield return null;
+    }
+    
+    private void DidFinishWalkout()
+    {
+        Debug.Log("Level Completed!");
+
+        cameraBounds.EnableBounds(true);
+        cameraFollows = false;
+        actor.UseAutopilot(false);
+        actor.controllable = false;
     }
 }
