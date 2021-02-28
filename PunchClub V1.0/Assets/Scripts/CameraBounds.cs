@@ -18,6 +18,9 @@ public class CameraBounds : MonoBehaviour
     public Transform cameraRoot;
     public Transform leftBounds;
     public Transform rightBounds;
+
+    public Transform introWalkStart;
+    public Transform introWalkEnd;
     //5
     void Start()
     {
@@ -37,6 +40,15 @@ public class CameraBounds : MonoBehaviour
         position = rightBounds.transform.localPosition;
         position.x = transform.localPosition.x + cameraHalfWidth;
         rightBounds.transform.localPosition = position;
+
+        //1
+        position = introWalkStart.transform.localPosition;
+        position.x = transform.localPosition.x - cameraHalfWidth - 2.0f;
+        introWalkStart.transform.localPosition = position;
+        //2
+        position = introWalkEnd.transform.localPosition;
+        position.x = transform.localPosition.x - cameraHalfWidth + 2.0f;
+        introWalkEnd.transform.localPosition = position;
     }
     //8
     public void SetXPosition(float x)
@@ -51,6 +63,12 @@ public class CameraBounds : MonoBehaviour
         offset = cameraRoot.position.x - actorPosition;
         SetXPosition(actorPosition);
         StartCoroutine(EaseOffset());
+    }
+
+    public void EnableBounds(bool isEnabled)
+    {
+        rightBounds.GetComponent<Collider>().enabled = isEnabled;
+        leftBounds.GetComponent<Collider>().enabled = isEnabled;
     }
 
     private IEnumerator EaseOffset()

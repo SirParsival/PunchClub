@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public GameObject currentLevelBackground;
     public GameObject robotPrefab;
 
+    public Transform walkInStartTarget;
+    public Transform walkInTarget;
+
     void Start()
     {
         cameraBounds.SetXPosition(cameraBounds.minVisibleX);
@@ -100,7 +103,22 @@ public class GameManager : MonoBehaviour
         yield return null;
         cameraBounds.SetXPosition(cameraBounds.minVisibleX);
         currentLevelBackground = Instantiate(currentLevelData.levelPrefab);
+
+        cameraBounds.EnableBounds(false);
+        actor.transform.position = walkInStartTarget.transform.position;
+
         yield return new WaitForSeconds(0.1f);
+
+        actor.UseAutopilot(true);
+        actor.AnimateTo(walkInTarget.transform.position, false, DidFinishIntro);
+
         cameraFollows = true;
+    }
+
+    private void DidFinishIntro()
+    {
+        actor.UseAutopilot(false);
+        actor.controllable = true;
+        cameraBounds.EnableBounds(true);
     }
 }
