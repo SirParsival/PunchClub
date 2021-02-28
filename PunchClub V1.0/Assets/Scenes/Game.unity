@@ -952,7 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcaa623956f4d489a1b8e7c81037d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 10
+  attackDamage: 100
   maxLife: 100
   currentLife: 100
   isAlive: 1
@@ -1383,6 +1383,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Map1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760726241734580629, guid: fcc088eb910a0df488befd4f86886224,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc088eb910a0df488befd4f86886224, type: 3}

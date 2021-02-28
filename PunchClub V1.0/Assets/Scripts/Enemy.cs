@@ -53,7 +53,6 @@ public class Enemy : Actor
 
     public override bool CanWalk()
     {
-        return
-        !baseAnim.GetCurrentAnimatorStateInfo(0).IsName("hurt");
+        return !baseAnim.GetCurrentAnimatorStateInfo(0).IsName("hurt");
     }
 }

@@ -27,12 +27,15 @@ public class EnemyAI : MonoBehaviour
 
     Enemy enemy;
     GameObject heroObj;
+
     public float attackReachMin;
     public float attackReachMax;
     public float personalSpace;
 
     public HeroDetector detector;
+
     List<DecisionWeight> weights;
+
     public EnemyAction currentAction = EnemyAction.None;
 
     private float decisionDuration;
@@ -47,8 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Chase()
     {
-        Vector3 directionVector = heroObj.transform.position -
-        transform.position;
+        Vector3 directionVector = heroObj.transform.position - transform.position;
         directionVector.z = directionVector.y = 0;
         directionVector.Normalize();
 
@@ -57,8 +59,7 @@ public class EnemyAI : MonoBehaviour
 
         directionVector.z += Random.Range(-0.4f, 0.4f);
 
-        enemy.MoveToOffset(heroObj.transform.position,
-        directionVector);
+        enemy.MoveToOffset(heroObj.transform.position, directionVector);
         decisionDuration = Random.Range(0.2f, 0.4f);
     }
 
@@ -78,12 +79,13 @@ public class EnemyAI : MonoBehaviour
     private void Roam()
     {
         float randomDegree = Random.Range(0, 360);
-        Vector2 offset = new Vector2(Mathf.Sin(randomDegree),
-        Mathf.Cos(randomDegree));
+        Vector2 offset = new Vector2(Mathf.Sin(randomDegree), Mathf.Cos(randomDegree));
         float distance = Random.Range(1, 3);
         offset *= distance;
+
         Vector3 directionVector = new Vector3(offset.x, 0, offset.y);
         enemy.MoveTo(enemy.transform.position + directionVector);
+
         decisionDuration = Random.Range(0.3f, 0.6f);
     }
 
@@ -148,15 +150,14 @@ public class EnemyAI : MonoBehaviour
     {
        
         float sqrDistance = Vector3.SqrMagnitude(
-        heroObj.transform.position - transform.position);
+            heroObj.transform.position - transform.position);
 
        
         bool canReach = attackReachMin * attackReachMin < sqrDistance
-        && sqrDistance < attackReachMax * attackReachMax;
+            && sqrDistance < attackReachMax * attackReachMax;
 
         
-        bool samePlane = Mathf.Abs(heroObj.transform.position.z -
-        transform.position.z) < 0.5f;
+        bool samePlane = Mathf.Abs(heroObj.transform.position.z - transform.position.z) < 0.5f;
         
         if (canReach && currentAction == EnemyAction.Chase)
         {

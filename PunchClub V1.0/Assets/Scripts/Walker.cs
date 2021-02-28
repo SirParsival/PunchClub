@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -30,8 +31,10 @@ public class Walker : MonoBehaviour
         navMeshAgent.Warp(transform.position);
         didFinishWalk = callback;
         speed = actor.speed;
+
         navPath = new NavMeshPath();
         bool pathFound = navMeshAgent.CalculatePath(targetPosition, navPath);
+
         if (pathFound)
         {
             corners = navPath.corners.ToList();
@@ -54,11 +57,11 @@ public class Walker : MonoBehaviour
         if (canWalk && corners != null && corners.Count > 0)
         {
             currentSpeed = speed;
-            actor.body.MovePosition(Vector3.MoveTowards(transform.position, corners[0],
-            Time.fixedDeltaTime * speed));
+            actor.body.MovePosition(
+                Vector3.MoveTowards(transform.position, corners[0],
+                                    Time.fixedDeltaTime * speed));
             //3
-            if (Vector3.SqrMagnitude(
-            transform.position - corners[0]) < 0.6f)
+            if (Vector3.SqrMagnitude(transform.position - corners[0]) < 0.6f)
             {
                 corners.RemoveAt(0);
             }
