@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f074d992ae4c69a498e58f3bd030ee91, type: 3}
+  m_Name: Level2Data
+  m_EditorClassIdentifier: 
+  battleData:
+  - column: 25
+    enemies:
+    - type: 0
+      color: 1
+      row: 0
+      offset: -1
+    - type: 0
+      color: 1
+      row: 1
+      offset: 1
+    - type: 0
+      color: 1
+      row: 2
+      offset: -1
+    - type: 0
+      color: 4
+      row: 3
+      offset: 1
+  - column: 35
+    enemies:
+    - type: 0
+      color: 3
+      row: 0
+      offset: -1
+    - type: 0
+      color: 3
+      row: 1
+      offset: 1
+    - type: 0
+      color: 3
+      row: 2
+      offset: -1
+    - type: 0
+      color: 3
+      row: 3
+      offset: 1
+    - type: 0
+      color: 4
+      row: 3
+      offset: 1
+    - type: 0
+      color: 3
+      row: 3
+      offset: 1
+  levelPrefab: {fileID: 2760726241341211541, guid: fcc088eb910a0df488befd4f86886224,
+    type: 3}
+  levelName: Level 2

@@ -836,6 +836,9 @@ MonoBehaviour:
   walkInStartTarget: {fileID: 209143511}
   walkInTarget: {fileID: 2120612307}
   walkOutTarget: {fileID: 1159545525}
+  levels:
+  - {fileID: 11400000, guid: 214ad23d58c199742825a1957bcc1adb, type: 2}
+  - {fileID: 11400000, guid: 1fd6aef9979858246a71a3d6ec606828, type: 2}
 --- !u!4 &1488637892
 Transform:
   m_ObjectHideFlags: 0
@@ -952,7 +955,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcaa623956f4d489a1b8e7c81037d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 100
+  normalAttack:
+    attackDamage: 5
+    force: 15
+    knockdown: 0
   maxLife: 100
   currentLife: 100
   isAlive: 1

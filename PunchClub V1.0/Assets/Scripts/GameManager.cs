@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
 {
-    //1
+
     public Hero actor;
     public bool cameraFollows = true;
     public CameraBounds cameraBounds;
@@ -17,7 +19,9 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> activeEnemies;
     public Transform[] spawnPositions;
+
     public GameObject currentLevelBackground;
+
     public GameObject robotPrefab;
 
     public Transform walkInStartTarget;
@@ -25,18 +29,22 @@ public class GameManager : MonoBehaviour
 
     public Transform walkOutTarget;
 
+    public LevelData[] levels;
+    public static int CurrentLevel = 0;
+
     void Start()
     {
-        cameraBounds.SetXPosition(cameraBounds.minVisibleX);
         nextEventIndex = 0;
-        StartCoroutine(LoadLevelData(currentLevelData));
+        StartCoroutine(LoadLevelData(levels[CurrentLevel]));
+        cameraBounds.SetXPosition(cameraBounds.minVisibleX);
     }
     
     void Update() 
     {
         if (currentBattleEvent == null && hasRemainingEvents)
         {
-            if (Mathf.Abs(currentLevelData.battleData[nextEventIndex].column - cameraBounds.activeCamera.transform.position.x) < 0.2f)
+            if (Mathf.Abs(currentLevelData.battleData[nextEventIndex].column - 
+                          cameraBounds.activeCamera.transform.position.x) < 0.2f)
             {
                 PlayBattleEvent(currentLevelData.battleData[nextEventIndex]);
             }
@@ -104,11 +112,18 @@ public class GameManager : MonoBehaviour
     {
         cameraFollows = false;
         currentLevelData = data;
+
         hasRemainingEvents = currentLevelData.battleData.Count > 0;
         activeEnemies = new List<GameObject>();
 
         yield return null;
         cameraBounds.SetXPosition(cameraBounds.minVisibleX);
+
+        if (currentLevelBackground != null)
+        {
+            Destroy(currentLevelBackground);
+        }
+
         currentLevelBackground = Instantiate(currentLevelData.levelPrefab);
 
         cameraBounds.EnableBounds(false);
@@ -141,11 +156,26 @@ public class GameManager : MonoBehaviour
     
     private void DidFinishWalkout()
     {
-        Debug.Log("Level Completed!");
+        CurrentLevel++;
+        if (CurrentLevel >= levels.Length)
+        {
+            Debug.Log("Game Completed!");
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            StartCoroutine(AnimateNextLevel());
+        }
 
         cameraBounds.EnableBounds(true);
         cameraFollows = false;
         actor.UseAutopilot(false);
         actor.controllable = false;
+    }
+
+    private IEnumerator AnimateNextLevel()
+    {
+        yield return null;
+        SceneManager.LoadScene("Game");
     }
 }
