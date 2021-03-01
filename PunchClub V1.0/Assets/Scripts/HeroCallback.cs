@@ -11,4 +11,9 @@ public class HeroCallback : MonoBehaviour
     {
         hero.DidChain(chain);
     }
+
+    public void DidJumpAttack()
+    {
+        hero.DidJumpAttack();
+    }
 }

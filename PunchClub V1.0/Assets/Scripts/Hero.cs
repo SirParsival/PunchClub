@@ -12,6 +12,11 @@ public class Hero : Actor
     ////public SpriteRenderer shadowSprite;
     ////2
     //public float speed = 2;
+    public bool canJumpAttack = true;
+    private int currentAttackChain = 1;
+    public int evaluatedAttackChain = 0;
+    public AttackData jumpAttack;
+
     public Walker walker;
     public bool isAutoPiloting;
     public bool controllable = true;
@@ -117,7 +122,6 @@ public class Hero : Actor
         }
     }
 
-    //1
     public void Stop()
     {
         speed = 0;
@@ -125,7 +129,7 @@ public class Hero : Actor
         isRunning = false;
         baseAnim.SetBool("IsRunning", isRunning);
     }
-    //2
+
     public void Walk()
     {
         speed = walkSpeed;
@@ -179,8 +183,28 @@ public class Hero : Actor
     //}
     public override void Attack()
     {
-        baseAnim.SetInteger("EvaluatedChain", 0);
-        baseAnim.SetInteger("CurrentChain", 1);
+        if (!isGrounded)
+        {
+            if (isJumpingAnim && canJumpAttack)
+            {
+                canJumpAttack = false;
+
+                currentAttackChain = 1;
+                evaluatedAttackChain = 0;
+                baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+                baseAnim.SetInteger("CurrentChain", currentAttackChain);
+
+                body.velocity = Vector3.zero;
+                body.useGravity = false;
+            }
+        }
+        else
+        {
+            currentAttackChain = 1;
+            evaluatedAttackChain = 0;
+            baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+            baseAnim.SetInteger("CurrentChain", currentAttackChain);
+        }
     }
 
     protected override void DidLand()
@@ -194,7 +218,6 @@ public class Hero : Actor
         baseAnim.SetInteger("EvaluatedChain", 1);
     }
 
-    //1
     void FixedUpdate()
     {
         if (!isAlive)
@@ -211,7 +234,6 @@ public class Hero : Actor
                 body.MovePosition(transform.position + moveVector * Time.fixedDeltaTime);
                 baseAnim.SetFloat("Speed", moveVector.magnitude);
             }
-            //2
             if (moveVector != Vector3.zero)
             {
                 if (moveVector.x != 0)
@@ -242,4 +264,34 @@ public class Hero : Actor
         walker.enabled = useAutopilot;
     }
 
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
+        if (collision.collider.name == "Floor")
+        {
+            canJumpAttack = true;
+        }
+    }
+
+    public void DidJumpAttack()
+    {
+        body.useGravity = true;
+    }
+
+    private void AnalyzeSpecialAttack(AttackData attackData, Actor actor, Vector3 hitPoint, Vector3 hitVector)
+    {
+        actor.EvaluateAttackData(attackData, hitVector, hitPoint);
+    }
+
+    protected override void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
+    {
+        if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
+        {
+            base.HitActor(actor, hitPoint, hitVector);
+        }
+        else if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack"))
+        {
+            AnalyzeSpecialAttack(jumpAttack, actor, hitPoint, hitVector);
+        }
+    }
 }
