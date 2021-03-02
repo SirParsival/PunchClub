@@ -190,7 +190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bc3cf2ccb63e144952a6ae8c2749cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 4
+  normalAttack:
+    attackDamage: 10
+    force: 50
+    knockdown: 0
   maxLife: 198
   currentLife: 198
   isAlive: 1
@@ -199,6 +202,7 @@ MonoBehaviour:
   body: {fileID: 2474870554486390946}
   speed: 2
   isGrounded: 0
+  isKnockedOut: 0
   ai: {fileID: 2474870554486390957}
   walker: {fileID: 2474870554486390958}
   stopMovementWhenHit: 1
@@ -294,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2474870554888842426}
   - component: {fileID: 2474870554888842425}
+  - component: {fileID: 6547117996542719779}
   m_Layer: 9
   m_Name: RobotAnimator
   m_TagString: Untagged
@@ -336,6 +341,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6547117996542719779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2474870554888842427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8f21b7a38dae14ba0d43110df17e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: {fileID: 2474870554486390944}
 --- !u!1 &2474870555520855947
 GameObject:
   m_ObjectHideFlags: 0
