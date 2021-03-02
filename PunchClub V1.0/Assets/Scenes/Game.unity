@@ -967,6 +967,12 @@ MonoBehaviour:
   body: {fileID: 1586185410}
   speed: 2
   isGrounded: 0
+  canJumpAttack: 1
+  evaluatedAttackChain: 0
+  jumpAttack:
+    attackDamage: 20
+    force: 120
+    knockdown: 1
   walker: {fileID: 1586185413}
   isAutoPiloting: 0
   controllable: 1
