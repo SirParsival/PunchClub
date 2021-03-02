@@ -64,6 +64,17 @@ public class Robot : Enemy
     {
         SetColor(RobotColor.Random);
     }
+
+    protected override IEnumerator KnockdownRoutine()
+    {
+        isKnockedOut = true;
+        baseAnim.SetTrigger("Knockdown");
+        ai.enabled = false;
+        yield return new WaitForSeconds(2.0f);
+        baseAnim.SetTrigger("GetUp");
+        ai.enabled = true;
+        knockdownRoutine = null;
+    }
 }
 
 public enum RobotColor
