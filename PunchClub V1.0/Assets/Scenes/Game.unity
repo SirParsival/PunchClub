@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 52750573}
   - component: {fileID: 52750574}
   - component: {fileID: 52750575}
+  - component: {fileID: 52750576}
   m_Layer: 8
   m_Name: HeroAnimator
   m_TagString: Untagged
@@ -238,6 +239,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hero: {fileID: 1586185412}
+--- !u!114 &52750576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52750571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8f21b7a38dae14ba0d43110df17e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: {fileID: 1586185412}
 --- !u!1 &124766656
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +981,7 @@ MonoBehaviour:
   body: {fileID: 1586185410}
   speed: 2
   isGrounded: 0
+  isKnockedOut: 0
   canJumpAttack: 1
   evaluatedAttackChain: 0
   jumpAttack:

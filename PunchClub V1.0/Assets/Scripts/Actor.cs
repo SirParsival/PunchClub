@@ -19,6 +19,9 @@ public class Actor : MonoBehaviour
     protected Vector3 frontVector;
     public bool isGrounded;
 
+    protected Coroutine knockdownRoutine;
+    public bool isKnockedOut;
+
     protected virtual void Start()
     {
         currentLife = maxLife;
@@ -26,13 +29,22 @@ public class Actor : MonoBehaviour
         baseAnim.SetBool("IsAlive", isAlive);
     }
 
-    public virtual void TakeDamage(float value, Vector3 hitVector)
+    public virtual void TakeDamage(float value, Vector3 hitVector, bool knockdown = false)
     {
         FlipSprite(hitVector.x > 0);
         currentLife -= value;
         if (isAlive && currentLife <= 0)
         {
             Die();
+        }
+        else if (knockdown)
+        {
+            if (knockdownRoutine == null)
+            {
+                Vector3 pushbackVector = (hitVector + Vector3.up * 0.75f).normalized;
+                body.AddForce(pushbackVector * 250);
+                knockdownRoutine = StartCoroutine(KnockdownRoutine());
+            }
         }
         else
         {
@@ -42,7 +54,7 @@ public class Actor : MonoBehaviour
 
     public bool CanBeHit()
     {
-        return isAlive;
+        return isAlive && !isKnockedOut;
     }
 
     public virtual void Update()
@@ -61,6 +73,7 @@ public class Actor : MonoBehaviour
             DidLand();
         }
     }
+
     protected virtual void OnCollisionExit(Collision collision)
     {
         if (collision.collider.name == "Floor")
@@ -69,6 +82,7 @@ public class Actor : MonoBehaviour
             baseAnim.SetBool("IsGrounded", isGrounded);
         }
     }
+
     protected virtual void DidLand()
     {
     }
@@ -116,6 +130,11 @@ public class Actor : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (knockdownRoutine != null)
+        {
+            StopCoroutine(knockdownRoutine);
+        }
+
         isAlive = false;
         baseAnim.SetBool("IsAlive", isAlive);
         StartCoroutine(DeathFlicker());
@@ -149,7 +168,21 @@ public class Actor : MonoBehaviour
     public virtual void EvaluateAttackData(AttackData data, Vector3 hitVector, Vector3 hitPoint)
     {
         body.AddForce(data.force * hitVector);
-        TakeDamage(data.attackDamage, hitVector);
+        TakeDamage(data.attackDamage, hitVector, data.knockdown);
+    }
+
+    public void DidGetUp()
+    {
+        isKnockedOut = false;
+    }
+
+    protected virtual IEnumerator KnockdownRoutine()
+    {
+        isKnockedOut = true;
+        baseAnim.SetTrigger("Knockdown");
+        yield return new WaitForSeconds(1.0f);
+        baseAnim.SetTrigger("GetUp");
+        knockdownRoutine = null;
     }
 }
 

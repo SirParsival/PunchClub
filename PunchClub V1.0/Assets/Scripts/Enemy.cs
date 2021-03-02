@@ -42,13 +42,13 @@ public class Enemy : Actor
         walker.StopMovement();
     }
 
-    public override void TakeDamage(float value, Vector3 hitVector)
+    public override void TakeDamage(float value, Vector3 hitVector, bool knockdown = false)
     {
         if (stopMovementWhenHit)
         {
             walker.StopMovement();
         }
-        base.TakeDamage(value, hitVector);
+        base.TakeDamage(value, hitVector, knockdown);
     }
 
     public override bool CanWalk()

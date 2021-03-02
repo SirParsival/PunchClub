@@ -294,4 +294,13 @@ public class Hero : Actor
             AnalyzeSpecialAttack(jumpAttack, actor, hitPoint, hitVector);
         }
     }
+
+    public override void TakeDamage(float value, Vector3 hitVector, bool knockdown = false)
+    {
+        if (!isGrounded)
+        {
+            knockdown = true;
+        }
+        base.TakeDamage(value, hitVector, knockdown);
+    }
 }
