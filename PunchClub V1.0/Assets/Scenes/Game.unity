@@ -1001,6 +1001,15 @@ MonoBehaviour:
     force: 120
     knockdown: 1
   runAttackForce: 1.8
+  normalAttack2:
+    attackDamage: 10
+    force: 120
+    knockdown: 0
+  normalAttack3:
+    attackDamage: 20
+    force: 120
+    knockdown: 1
+  chainComboLimit: 0.3
 --- !u!114 &1586185413
 MonoBehaviour:
   m_ObjectHideFlags: 0
