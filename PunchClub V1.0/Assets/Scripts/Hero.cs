@@ -77,8 +77,8 @@ public class Hero : Actor
             baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack1") ||
             baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack2") ||
             baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack3") ||
-            baseAnim.GetCurrentAnimatorStateInfo(0).IsName("run_attack") ||
-            baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack");
+            baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack") ||
+            baseAnim.GetCurrentAnimatorStateInfo(0).IsName("run_attack");
 
         isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
         isJumpingAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_rise") ||
@@ -103,6 +103,19 @@ public class Hero : Actor
         //1
         if (!isAttackingAnim)
         {
+            if (chainComboTimer > 0)
+            {
+                chainComboTimer -= Time.deltaTime;
+                if (chainComboTimer < 0)
+                {
+                    chainComboTimer = 0;
+                    currentAttackChain = 0;
+                    evaluatedAttackChain = 0;
+                    baseAnim.SetInteger("CurrentChain", currentAttackChain);
+                    baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+                }
+            }
+
             if ((v == 0 && h == 0))
             {
                 Stop();
@@ -110,10 +123,9 @@ public class Hero : Actor
             }
             else if (!isMoving && (v != 0 || h != 0))
             {
-                //2
                 isMoving = true;
                 float dotProduct = Vector3.Dot(currentDir, lastWalkVector);
-                //3
+               
                 if (canRun && Time.time < lastWalk + tapAgainToRunTime && dotProduct > 0)
                 {
                     Run();
@@ -121,7 +133,6 @@ public class Hero : Actor
                 else
                 {
                     Walk();
-                    //4
                     if (h != 0)
                     {
                         lastWalkVector = currentDir;
@@ -131,18 +142,18 @@ public class Hero : Actor
             }
         }
 
-        if (chainComboTimer > 0)
-        {
-            chainComboTimer -= Time.deltaTime;
-            if (chainComboTimer < 0)
-            {
-                chainComboTimer = 0;
-                currentAttackChain = 0;
-                evaluatedAttackChain = 0;
-                baseAnim.SetInteger("CurrentChain", currentAttackChain);
-                baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
-            }
-        }
+        //if (chainComboTimer > 0)
+        //{
+        //    chainComboTimer -= Time.deltaTime;
+        //    if (chainComboTimer < 0)
+        //    {
+        //        chainComboTimer = 0;
+        //        currentAttackChain = 0;
+        //        evaluatedAttackChain = 0;
+        //        baseAnim.SetInteger("CurrentChain", currentAttackChain);
+        //        baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+        //    }
+        //}
 
         if (jump && !isKnockedOut && !isJumpLandAnim && !isAttackingAnim && (isGrounded || (isJumpingAnim && Time.time < lastJumpTime + jumpDuration)))
         {
@@ -240,18 +251,18 @@ public class Hero : Actor
                 {
                     body.AddForce((Vector3.up + (frontVector * 5)) * runAttackForce, ForceMode.Impulse);
 
-                    if (currentAttackChain == 0 || chainComboTimer == 0)
-                    {
-                        currentAttackChain = 1;
-                        evaluatedAttackChain = 0;
-                    }
+                    currentAttackChain = 1;
+                    evaluatedAttackChain = 0;
                     baseAnim.SetInteger("CurrentChain", currentAttackChain);
                     baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
                 }
                 else
                 {
-                    currentAttackChain = 1;
-                    evaluatedAttackChain = 0;
+                    if (currentAttackChain == 0 || chainComboTimer == 0)
+                    {
+                        currentAttackChain = 1;
+                        evaluatedAttackChain = 0;
+                    }
                     baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
                     baseAnim.SetInteger("CurrentChain", currentAttackChain);
                 }
