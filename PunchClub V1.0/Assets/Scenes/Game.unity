@@ -996,6 +996,11 @@ MonoBehaviour:
   canRun: 1
   input: {fileID: 1488637893}
   jumpForce: 1750
+  runAttack:
+    attackDamage: 20
+    force: 120
+    knockdown: 1
+  runAttackForce: 1.8
 --- !u!114 &1586185413
 MonoBehaviour:
   m_ObjectHideFlags: 0

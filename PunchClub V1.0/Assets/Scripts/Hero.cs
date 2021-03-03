@@ -47,6 +47,9 @@ public class Hero : Actor
     private float jumpDuration = 0.2f;
     private float lastJumpTime;
 
+    public AttackData runAttack;
+    public float runAttackForce = 1.8f;
+
     //public bool isGrounded;
 
     //3
@@ -65,7 +68,8 @@ public class Hero : Actor
 
         isAttackingAnim = 
             baseAnim.GetCurrentAnimatorStateInfo(0).IsName("attack1") ||
-                          baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack");
+                          baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack") || 
+                          baseAnim.GetCurrentAnimatorStateInfo(0).IsName("run_attack");
 
 
         isJumpLandAnim = baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_land");
@@ -206,12 +210,31 @@ public class Hero : Actor
                 body.useGravity = false;
             }
         }
+        //else
+        //{
+        //    currentAttackChain = 1;
+        //    evaluatedAttackChain = 0;
+        //    baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+        //    baseAnim.SetInteger("CurrentChain", currentAttackChain);
+        //}
         else
         {
-            currentAttackChain = 1;
-            evaluatedAttackChain = 0;
-            baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
-            baseAnim.SetInteger("CurrentChain", currentAttackChain);
+            if (isRunning)
+            {
+                body.AddForce((Vector3.up + (frontVector * 5)) * runAttackForce, ForceMode.Impulse);
+                
+                currentAttackChain = 1;
+                evaluatedAttackChain = 0;
+                baseAnim.SetInteger("CurrentChain", currentAttackChain);
+                baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+            }
+            else
+            {
+                currentAttackChain = 1;
+                evaluatedAttackChain = 0;
+                baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
+                baseAnim.SetInteger("CurrentChain", currentAttackChain);
+            }
         }
     }
 
@@ -300,6 +323,10 @@ public class Hero : Actor
         else if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack"))
         {
             AnalyzeSpecialAttack(jumpAttack, actor, hitPoint, hitVector);
+        }
+        else if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("run_attack"))
+        {
+            AnalyzeSpecialAttack(runAttack, actor, hitPoint, hitVector);
         }
     }
 
