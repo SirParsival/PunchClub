@@ -22,6 +22,8 @@ public class Actor : MonoBehaviour
     protected Coroutine knockdownRoutine;
     public bool isKnockedOut;
 
+    public GameObject hitSparkPrefab;
+
     protected virtual void Start()
     {
         currentLife = maxLife;
@@ -169,6 +171,7 @@ public class Actor : MonoBehaviour
     {
         body.AddForce(data.force * hitVector);
         TakeDamage(data.attackDamage, hitVector, data.knockdown);
+        ShowHitEffects(data.attackDamage, hitPoint);
     }
 
     public void DidGetUp()
@@ -183,6 +186,12 @@ public class Actor : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         baseAnim.SetTrigger("GetUp");
         knockdownRoutine = null;
+    }
+
+    protected void ShowHitEffects(float value, Vector3 position)
+    {
+        GameObject sparkObj = Instantiate(hitSparkPrefab);
+        sparkObj.transform.position = position;
     }
 }
 

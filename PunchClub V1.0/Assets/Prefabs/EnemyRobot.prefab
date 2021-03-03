@@ -203,6 +203,8 @@ MonoBehaviour:
   speed: 2
   isGrounded: 0
   isKnockedOut: 0
+  hitSparkPrefab: {fileID: 1529158330857649468, guid: 30d245f0d3c2acf46abb1e46ba4e6058,
+    type: 3}
   ai: {fileID: 2474870554486390957}
   walker: {fileID: 2474870554486390958}
   stopMovementWhenHit: 1
