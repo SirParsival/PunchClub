@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public LifeBar enemyLifeBar;
 
     public Hero actor;
     public bool cameraFollows = true;
@@ -101,6 +102,8 @@ public class GameManager : MonoBehaviour
         cameraFollows = true;
         cameraBounds.CalculateOffset(actor.transform.position.x);
         hasRemainingEvents = currentLevelData.battleData.Count > nextEventIndex;
+
+        enemyLifeBar.EnableLifeBar(false);
 
         if (!hasRemainingEvents)
         {

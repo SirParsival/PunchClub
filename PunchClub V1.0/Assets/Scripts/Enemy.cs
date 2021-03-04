@@ -55,4 +55,11 @@ public class Enemy : Actor
     {
         return !baseAnim.GetCurrentAnimatorStateInfo(0).IsName("hurt") && !baseAnim.GetCurrentAnimatorStateInfo(0).IsName("getup");
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        lifeBar = GameObject.FindGameObjectWithTag("EnemyLifeBar").GetComponent<LifeBar>();
+        lifeBar.SetProgress(currentLife / maxLife);
+    }
 }

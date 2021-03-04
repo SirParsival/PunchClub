@@ -177,6 +177,13 @@ public class Hero : Actor
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        lifeBar = GameObject.FindGameObjectWithTag("HeroLifeBar").GetComponent<LifeBar>();
+        lifeBar.SetProgress(currentLife / maxLife);
+    }
+
     public void Stop()
     {
         speed = 0;
@@ -218,24 +225,6 @@ public class Hero : Actor
         body.AddForce(verticalVector, ForceMode.Force);
     }
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.collider.name == "Floor")
-    //    {
-    //        isGrounded = true;
-    //        baseAnim.SetBool("IsGrounded", isGrounded);
-    //        DidLand();
-    //    }
-    //}
-
-    //void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.collider.name == "Floor")
-    //    {
-    //        isGrounded = false;
-    //        baseAnim.SetBool("IsGrounded", isGrounded);
-    //    }
-    //}
     public override void Attack()
     {
         if (currentAttackChain <= maxCombo)
