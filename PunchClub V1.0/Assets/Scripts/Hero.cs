@@ -64,6 +64,10 @@ public class Hero : Actor
     public float chainComboLimit = 0.3f;
     const int maxCombo = 3;
 
+    public float hurtTolerance;
+    public float hurtLimit = 20;
+    public float recoveryRate = 5;
+
     public override void Update()
     {
         base.Update();
@@ -164,6 +168,12 @@ public class Hero : Actor
         {
             lastAttackTime = Time.time;
             Attack();
+        }
+
+        if (hurtTolerance < hurtLimit)
+        {
+            hurtTolerance += Time.deltaTime * recoveryRate;
+            hurtTolerance = Mathf.Clamp(hurtTolerance, 0, hurtLimit);
         }
     }
 
@@ -374,8 +384,10 @@ public class Hero : Actor
 
     public override void TakeDamage(float value, Vector3 hitVector, bool knockdown = false)
     {
-        if (!isGrounded)
+        hurtTolerance -= value;
+        if (hurtTolerance <= 0 || !isGrounded)
         {
+            hurtTolerance = hurtLimit;
             knockdown = true;
         }
         base.TakeDamage(value, hitVector, knockdown);
