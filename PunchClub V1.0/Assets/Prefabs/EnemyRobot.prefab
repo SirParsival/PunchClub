@@ -207,6 +207,7 @@ MonoBehaviour:
     type: 3}
   lifeBar: {fileID: 0}
   actorThumbnail: {fileID: 21300000, guid: 4e9efb82d033c97448da119cde03d675, type: 3}
+  hitValuePrefab: {fileID: 146428, guid: 8677916ba3681f14a804f5a26b7f4e03, type: 3}
   ai: {fileID: 2474870554486390957}
   walker: {fileID: 2474870554486390958}
   stopMovementWhenHit: 1

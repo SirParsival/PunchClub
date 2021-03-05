@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Actor : MonoBehaviour
 {
+
     public AttackData normalAttack;
 
     //public float attackDamage = 10;
@@ -13,8 +15,7 @@ public class Actor : MonoBehaviour
     public SpriteRenderer baseSprite;
     public Animator baseAnim;
     public Rigidbody body;
-    //public SpriteRenderer shadowSprite;
-    //2
+
     public float speed = 2;
     protected Vector3 frontVector;
     public bool isGrounded;
@@ -26,6 +27,8 @@ public class Actor : MonoBehaviour
 
     public LifeBar lifeBar;
     public Sprite actorThumbnail;
+
+    public GameObject hitValuePrefab;
 
     protected virtual void Start()
     {
@@ -204,6 +207,16 @@ public class Actor : MonoBehaviour
     {
         GameObject sparkObj = Instantiate(hitSparkPrefab);
         sparkObj.transform.position = position;
+
+        GameObject obj = Instantiate(hitValuePrefab);
+        obj.GetComponent<Text>().text = value.ToString();
+        obj.GetComponent<DestroyTimer>().EnableTimer(1.0f);
+
+        GameObject canvas = GameObject.FindGameObjectWithTag("WorldCanvas");
+        obj.transform.SetParent(canvas.transform);
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
+        obj.transform.position = position;
     }
 }
 
