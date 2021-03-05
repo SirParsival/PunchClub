@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject goIndicator;
     public LifeBar enemyLifeBar;
 
     public Hero actor;
@@ -109,6 +110,10 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(HeroWalkout());
         }
+        else
+        {
+            ShowGoIndicator();
+        }
     }
 
     private IEnumerator LoadLevelData(LevelData data)
@@ -145,6 +150,8 @@ public class GameManager : MonoBehaviour
         actor.UseAutopilot(false);
         actor.controllable = true;
         cameraBounds.EnableBounds(true);
+
+        ShowGoIndicator();
     }
 
     private IEnumerator HeroWalkout()
@@ -180,5 +187,22 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
         SceneManager.LoadScene("Game");
+    }
+
+    private void ShowGoIndicator()
+    {
+        StartCoroutine(FlickerGoIndicator(4));
+    }
+
+    private IEnumerator FlickerGoIndicator(int count = 4)
+    {
+        while (count > 0)
+        {
+            goIndicator.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            goIndicator.SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+            count--;
+        }
     }
 }

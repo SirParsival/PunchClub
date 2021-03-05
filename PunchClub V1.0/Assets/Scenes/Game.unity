@@ -1217,6 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea8f673301be4541beb57b8d90d9f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goIndicator: {fileID: 847417175}
   enemyLifeBar: {fileID: 2470032024075619343}
   actor: {fileID: 1586185412}
   cameraFollows: 1
