@@ -31,6 +31,32 @@ MonoBehaviour:
       color: 4
       row: 3
       offset: 1
+  - column: 30
+    enemies:
+    - type: 0
+      color: 3
+      row: 0
+      offset: -1
+    - type: 0
+      color: 3
+      row: 1
+      offset: 1
+    - type: 0
+      color: 3
+      row: 2
+      offset: -1
+    - type: 0
+      color: 3
+      row: 3
+      offset: 1
+    - type: 0
+      color: 4
+      row: 3
+      offset: 1
+    - type: 0
+      color: 3
+      row: 3
+      offset: 1
   - column: 35
     enemies:
     - type: 0
@@ -54,6 +80,10 @@ MonoBehaviour:
       row: 3
       offset: 1
     - type: 0
+      color: 3
+      row: 3
+      offset: 1
+    - type: 1
       color: 3
       row: 3
       offset: 1

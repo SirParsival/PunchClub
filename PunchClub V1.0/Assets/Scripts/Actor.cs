@@ -30,6 +30,8 @@ public class Actor : MonoBehaviour
 
     public GameObject hitValuePrefab;
 
+    protected bool canFlinch = true;
+
     protected virtual void Start()
     {
         currentLife = maxLife;
@@ -54,7 +56,7 @@ public class Actor : MonoBehaviour
                 knockdownRoutine = StartCoroutine(KnockdownRoutine());
             }
         }
-        else
+        else if (canFlinch)
         {
             baseAnim.SetTrigger("IsHurt");
         }

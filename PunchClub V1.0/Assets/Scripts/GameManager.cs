@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject robotPrefab;
 
+    public GameObject bossPrefab;
+
     public Transform walkInStartTarget;
     public Transform walkInTarget;
 
@@ -66,7 +68,15 @@ public class GameManager : MonoBehaviour
 
     private GameObject SpawnEnemy(EnemyData data)
     {
-        GameObject enemyObj = Instantiate(robotPrefab);
+        GameObject enemyObj;
+        if (data.type == EnemyType.Boss)
+        {
+            enemyObj = Instantiate(bossPrefab);
+        }
+        else
+        {
+            enemyObj = Instantiate(robotPrefab);
+        }
         Vector3 position = spawnPositions[data.row].position;
         position.x = cameraBounds.activeCamera.transform.position.x + (data.offset * (cameraBounds.cameraHalfWidth + 1));
         enemyObj.transform.position = position;
