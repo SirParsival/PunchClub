@@ -28,6 +28,10 @@ public class Actor : MonoBehaviour
     public LifeBar lifeBar;
     public Sprite actorThumbnail;
 
+    public AudioClip deathClip;
+    public AudioClip hitClip;
+    public AudioSource audioSource;
+
     public GameObject hitValuePrefab;
 
     protected bool canFlinch = true;
@@ -140,6 +144,7 @@ public class Actor : MonoBehaviour
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
         actor.EvaluateAttackData(normalAttack, hitVector, hitPoint);
+        PlaySFX(hitClip);
     }
 
     public virtual void FaceTarget(Vector3 targetPoint)
@@ -157,6 +162,8 @@ public class Actor : MonoBehaviour
         isAlive = false;
         baseAnim.SetBool("IsAlive", isAlive);
         StartCoroutine(DeathFlicker());
+
+        PlaySFX(deathClip);
     }
 
     public virtual bool CanWalk()
@@ -219,6 +226,11 @@ public class Actor : MonoBehaviour
         obj.transform.localRotation = Quaternion.identity;
         obj.transform.localScale = Vector3.one;
         obj.transform.position = position;
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
 

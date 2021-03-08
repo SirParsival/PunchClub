@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        AudioManager.Instance.GetComponent<AudioSource>().Play();
     }
 
     public void GoToGame()

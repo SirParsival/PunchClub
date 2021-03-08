@@ -274,6 +274,9 @@ MonoBehaviour:
     type: 3}
   lifeBar: {fileID: 0}
   actorThumbnail: {fileID: 21300000, guid: 4cca1faa6ad1f964da32ff01070560d2, type: 3}
+  deathClip: {fileID: 8300000, guid: e5233e305f4a98740b4b7fce7150a895, type: 3}
+  hitClip: {fileID: 8300000, guid: dae7f1044e1933e45ad0c23162a9c2d5, type: 3}
+  audioSource: {fileID: 82323762064507264}
   hitValuePrefab: {fileID: 146428, guid: 8677916ba3681f14a804f5a26b7f4e03, type: 3}
   ai: {fileID: 114307919145121156}
   walker: {fileID: 114526451583102990}

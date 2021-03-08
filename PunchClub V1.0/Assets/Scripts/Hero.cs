@@ -78,6 +78,8 @@ public class Hero : Actor
     public Powerup currentPowerup;
     public GameObject powerupRoot;
 
+    public AudioClip hit2Clip;
+
     public override void Update()
     {
         base.Update();
@@ -131,8 +133,7 @@ public class Hero : Actor
                     baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
                 }
             }
-
-            if ((v == 0 && h == 0))
+            if (v == 0 && h == 0)
             {
                 Stop();
                 isMoving = false;
@@ -157,19 +158,6 @@ public class Hero : Actor
                 }
             }
         }
-
-        //if (chainComboTimer > 0)
-        //{
-        //    chainComboTimer -= Time.deltaTime;
-        //    if (chainComboTimer < 0)
-        //    {
-        //        chainComboTimer = 0;
-        //        currentAttackChain = 0;
-        //        evaluatedAttackChain = 0;
-        //        baseAnim.SetInteger("CurrentChain", currentAttackChain);
-        //        baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
-        //    }
-        //}
 
         if (jump && hasWeapon)
         {
@@ -315,7 +303,7 @@ public class Hero : Actor
         baseAnim.SetInteger("EvaluatedChain", evaluatedAttackChain);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!isAlive)
         {
@@ -387,6 +375,7 @@ public class Hero : Actor
         {
             AttackData attackData = hasWeapon ? currentPowerup.attackData1 : normalAttack;
             AnalyzeNormalAttack(attackData, 2, actor, hitPoint, hitVector);
+            PlaySFX(hitClip);
             if (hasWeapon)
             {
                 currentPowerup.Use();
@@ -396,6 +385,7 @@ public class Hero : Actor
         {
             AttackData attackData = hasWeapon ? currentPowerup.attackData2 : normalAttack2;
             AnalyzeNormalAttack(attackData, 3, actor, hitPoint, hitVector);
+            PlaySFX(hitClip);
             if (hasWeapon)
             {
                 currentPowerup.Use();
@@ -405,6 +395,7 @@ public class Hero : Actor
         {
             AttackData attackData = hasWeapon ? currentPowerup.attackData3 : normalAttack3;
             AnalyzeNormalAttack(attackData, 1, actor, hitPoint, hitVector);
+            PlaySFX(hit2Clip);
             if (hasWeapon)
             {
                 currentPowerup.Use();
@@ -416,10 +407,12 @@ public class Hero : Actor
         else if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("jump_attack"))
         {
             AnalyzeSpecialAttack(jumpAttack, actor, hitPoint, hitVector);
+            PlaySFX(hit2Clip);
         }
         else if (baseAnim.GetCurrentAnimatorStateInfo(0).IsName("run_attack"))
         {
             AnalyzeSpecialAttack(runAttack, actor, hitPoint, hitVector);
+            PlaySFX(hit2Clip);
         }
     }
 
@@ -499,7 +492,7 @@ public class Hero : Actor
         canJump = true;
     }
 
-    void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Powerup"))
         {
@@ -511,7 +504,7 @@ public class Hero : Actor
         }
     }
     
-    void OnTriggerExit(Collider collider)
+    private void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Powerup"))
         {
@@ -520,6 +513,24 @@ public class Hero : Actor
             {
                 nearbyPowerup = null;
             }
+        }
+    }
+
+    public override void DidHitObject(Collider collider, Vector3 hitPoint, Vector3 hitVector)
+    {
+        Container containerObject = collider.GetComponent<Container>();
+        if (containerObject != null)
+        {
+            containerObject.Hit(hitPoint);
+            if (containerObject.CanBeOpened() && collider.tag != gameObject.tag)
+            {
+                containerObject.Open(hitPoint);
+                PlaySFX(hitClip);
+            }
+        }
+        else
+        {
+            base.DidHitObject(collider, hitPoint, hitVector);
         }
     }
 }
