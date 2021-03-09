@@ -80,6 +80,8 @@ public class Hero : Actor
 
     public AudioClip hit2Clip;
 
+    public GameManager gameManager;
+
     public override void Update()
     {
         base.Update();
@@ -532,5 +534,11 @@ public class Hero : Actor
         {
             base.DidHitObject(collider, hitPoint, hitVector);
         }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        gameManager.GameOver();
     }
 }

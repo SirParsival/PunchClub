@@ -1,54 +1,26 @@
-﻿/*
-	 * Copyright (c) 2018 Razeware LLC
-	 * 
-	 * Permission is hereby granted, free of charge, to any person obtaining a copy
-	 * of this software and associated documentation files (the "Software"), to deal
-	 * in the Software without restriction, including without limitation the rights
-	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	 * copies of the Software, and to permit persons to whom the Software is
-	 * furnished to do so, subject to the following conditions:
-	 * 
-	 * The above copyright notice and this permission notice shall be included in
-	 * all copies or substantial portions of the Software.
-	 *
-	 * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish, 
-	 * distribute, sublicense, create a derivative work, and/or sell copies of the 
-	 * Software in any work that is designed, intended, or marketed for pedagogical or 
-	 * instructional purposes related to programming, coding, application development, 
-	 * or information technology.  Permission for such use, copying, modification,
-	 * merger, publication, distribution, sublicensing, creation of derivative works, 
-	 * or sale is expressly withheld.
-	 *    
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	 * THE SOFTWARE.
-	 */
-
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class GridSnapper : MonoBehaviour {
+public class GridSnapper : MonoBehaviour 
+{
 
 	public string filename;
 	public bool autoSnapping;
 
 	public Color gridColor = Color.white;
 
-	void Update() {
-		if (autoSnapping) {
+	void Update() 
+	{
+		if (autoSnapping) 
+		{
 			SnapChildren();
 		}
 	}
 
-	public void SnapChildren() {
-		foreach (Transform child in transform) {
-
-			//do the snapping;
+	public void SnapChildren() 
+	{
+		foreach (Transform child in transform) 
+		{
 			Vector3 pos = child.localPosition;
 			pos.x = Mathf.RoundToInt(pos.x);
 			pos.y = Mathf.RoundToInt(pos.y);
@@ -57,7 +29,8 @@ public class GridSnapper : MonoBehaviour {
 		}
 	}
 
-	public Mesh MakeMesh() {
+	public Mesh MakeMesh() 
+	{
 		Mesh mesh = new Mesh();
 
 		int polygons = transform.childCount;
@@ -97,8 +70,8 @@ public class GridSnapper : MonoBehaviour {
 	}
 
 
-	public void OnDrawGizmos() {
-		//limit to 20 x 10;
+	public void OnDrawGizmos() 
+	{
 
 		float scale = 1000;
 		int columns = 100;
@@ -108,9 +81,8 @@ public class GridSnapper : MonoBehaviour {
 
 		Gizmos.color = gridColor;
 
-		for (int j = -rows; j < rows; j++) {
-
-
+		for (int j = -rows; j < rows; j++) 
+		{
 			Vector3 min = new Vector3(scale + offset.x, j + offset.y, 0);
 			Vector3 max = new Vector3(-scale + offset.x, j + offset.y, 0);
 
@@ -121,8 +93,8 @@ public class GridSnapper : MonoBehaviour {
 
 		}
 
-		for (int i = -columns; i < columns; i++) {
-
+		for (int i = -columns; i < columns; i++) 
+		{
 			Vector3 min = new Vector3(i + offset.x, +scale + offset.y, 0);
 			Vector3 max = new Vector3(i + offset.x, -scale + offset.y, 0);
 
@@ -130,11 +102,6 @@ public class GridSnapper : MonoBehaviour {
 			max = transform.TransformPoint(max);
 
 			Gizmos.DrawLine(min, max);
-
 		}
-
-
-
-
 	}
 }

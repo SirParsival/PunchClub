@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Coroutine loadingRoutine;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -14,8 +15,16 @@ public class MainMenu : MonoBehaviour
 
     public void GoToGame()
     {
+        if (loadingRoutine == null)
+        {
+            loadingRoutine = StartCoroutine(LoadGameScene(2.0f));
+        }
+    }
+
+    private IEnumerator LoadGameScene(float delayDuration)
+    {
+        yield return new WaitForSeconds(delayDuration);
         GameManager.CurrentLevel = 0;
-        //3
         SceneManager.LoadScene("Game");
     }
 }

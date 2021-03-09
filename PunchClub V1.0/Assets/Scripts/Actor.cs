@@ -32,6 +32,8 @@ public class Actor : MonoBehaviour
     public AudioClip hitClip;
     public AudioSource audioSource;
 
+    protected ActorCollider actorCollider;
+
     public GameObject hitValuePrefab;
 
     protected bool canFlinch = true;
@@ -41,6 +43,9 @@ public class Actor : MonoBehaviour
         currentLife = maxLife;
         isAlive = true;
         baseAnim.SetBool("IsAlive", isAlive);
+
+        actorCollider = GetComponent<ActorCollider>();
+        actorCollider.SetColliderStance(true);
     }
 
     public virtual void TakeDamage(float value, Vector3 hitVector, bool knockdown = false)
@@ -140,7 +145,7 @@ public class Actor : MonoBehaviour
             }
         }
     }
-    //2
+    
     protected virtual void HitActor(Actor actor, Vector3 hitPoint, Vector3 hitVector)
     {
         actor.EvaluateAttackData(normalAttack, hitVector, hitPoint);
@@ -164,6 +169,8 @@ public class Actor : MonoBehaviour
         StartCoroutine(DeathFlicker());
 
         PlaySFX(deathClip);
+
+        actorCollider.SetColliderStance(false);
     }
 
     public virtual bool CanWalk()
@@ -207,7 +214,11 @@ public class Actor : MonoBehaviour
     {
         isKnockedOut = true;
         baseAnim.SetTrigger("Knockdown");
+
+        actorCollider.SetColliderStance(false);
         yield return new WaitForSeconds(1.0f);
+        actorCollider.SetColliderStance(true);
+
         baseAnim.SetTrigger("GetUp");
         knockdownRoutine = null;
     }

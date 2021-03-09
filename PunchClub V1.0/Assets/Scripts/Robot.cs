@@ -70,7 +70,11 @@ public class Robot : Enemy
         isKnockedOut = true;
         baseAnim.SetTrigger("Knockdown");
         ai.enabled = false;
+
+        actorCollider.SetColliderStance(false);
         yield return new WaitForSeconds(2.0f);
+        actorCollider.SetColliderStance(true);
+
         baseAnim.SetTrigger("GetUp");
         ai.enabled = true;
         knockdownRoutine = null;

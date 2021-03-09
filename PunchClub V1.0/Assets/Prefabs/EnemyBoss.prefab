@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 54000010111707526}
   - component: {fileID: 195000011172537454}
   - component: {fileID: 82323762064507264}
+  - component: {fileID: -760204318640290046}
   m_Layer: 9
   m_Name: EnemyBoss
   m_TagString: Untagged
@@ -458,6 +459,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-760204318640290046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011763672072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0aead0c56e3540419e54efa6f499bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standingColliderCenter: {x: 0, y: 1.2, z: 0}
+  standingColliderSize: {x: 1, y: 2.4, z: 0.6}
+  downColliderCenter: {x: -0.6, y: 0.5, z: 0}
+  downColliderSize: {x: 2.4, y: 1, z: 0.6}
 --- !u!1 &1000013187247090
 GameObject:
   m_ObjectHideFlags: 0
