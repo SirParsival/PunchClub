@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        AudioManager.Instance.GetComponent<AudioSource>().Play();
+        //AudioManager.Instance.GetComponent<AudioSource>().Play();
     }
 
     public void GoToGame()
@@ -19,6 +19,12 @@ public class MainMenu : MonoBehaviour
         {
             loadingRoutine = StartCoroutine(LoadGameScene(2.0f));
         }
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Qitt!");
+        Application.Quit();
     }
 
     private IEnumerator LoadGameScene(float delayDuration)
