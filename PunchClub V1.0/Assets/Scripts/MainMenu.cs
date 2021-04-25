@@ -13,6 +13,15 @@ public class MainMenu : MonoBehaviour
         //AudioManager.Instance.GetComponent<AudioSource>().Play();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Qitt!");
+            Application.Quit();
+        }
+    }
+
     public void GoToGame()
     {
         if (loadingRoutine == null)

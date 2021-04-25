@@ -75,6 +75,10 @@ public class GameManager : MonoBehaviour
         {
             cameraBounds.SetXPosition(actor.transform.position.x);
         }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    SceneManager.LoadScene("MainMenu");
+        //}
     }
 
     private GameObject SpawnEnemy(EnemyData data)
